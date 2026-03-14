@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>NEON</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="neon">
+    <div class="terminal-container">
+        <h1>NEON v1.0</h1>
+        <canvas id="game-canvas" width="200" height="400"></canvas>
+        <div class="controls">
+            <select id="theme-selector">
+                <option value="neon">Pink Neon (Electropunk)</option>
+                <option value="matrix">Matrix Green (Hacker)</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        const selector = document.getElementById('theme-selector');
+        selector.addEventListener('change', (e) => {
+            document.body.setAttribute('data-theme', e.target.value);
+        });
+
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const BOX_SIZE = 20; 
+
+        async function updatePixel() {
+            try {
+                const response = await fetch('/api/state');
+                const data = await response.json();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = data.color;
+                ctx.fillRect(data.x * BOX_SIZE, data.y * BOX_SIZE, BOX_SIZE - 2, BOX_SIZE - 2);
+                
+            } catch (err) {
+                console.error("Error conectando con NEON Core:", err);
+            }
+        }
+        setInterval(updatePixel, 200);
+    </script>
+</body>
+</html>

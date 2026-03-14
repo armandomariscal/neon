@@ -1,0 +1,24 @@
+{
+  "name": "neon",
+  "version": "1.0.0",
+  "type": "module", 
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node node-services/app.js",
+    "start:node": "node node-service/app.js",
+    "start:python": "python python-service/run.py",
+    "start:all": "npm run start:node & npm run start:python",
+    "dev": "nodemon node-service/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/armandomariscal/neon.git"
+  },
+  "keywords": ["nodejs", "backend", "ddd", "cyberpunk", "retro-gaming"],
+  "author": "Armando Mariscal",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

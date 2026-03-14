@@ -1,0 +1,36 @@
+:root {
+    --bg: #050505;
+    --glow: #ff00ff;
+    --text: #f0f;
+}
+
+[data-theme="matrix"] {
+    --glow: #00ff41;
+    --text: #00ff41;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.terminal-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#game-canvas {
+    border: 3px solid var(--glow);
+    background: #111;
+    box-shadow: 0 0 15px var(--glow);
+}
+
+h1 {
+    text-shadow: 0 0 10px var(--glow);
+    letter-spacing: 5px;
+}

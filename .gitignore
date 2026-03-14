@@ -1,3 +1,11 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
