@@ -1,7 +1,8 @@
-export class Brick {
+import { GameElement } from './GameElement.js';
+
+export class Brick extends GameElement {
     constructor() {
-        this.position = { x: 5, y: 10 }; 
-        this.color = "#ff00ff";
+        super(5, 10, "#ff00ff"); 
     }
 
     move(direction) {
@@ -13,17 +14,17 @@ export class Brick {
         };
 
         const delta = moves[direction] || { x: 0, y: 0 };
-        this.position.x += delta.x;
-        this.position.y += delta.y;
         
-        if (this.position.x >= 10) this.position.x = 0;
-        if (this.position.x < 0) this.position.x = 9;
-
-        if (this.position.y >= 20) this.position.y = 0;
-        if (this.position.y < 0) this.position.y = 19;
+        this.x += delta.x;
+        this.y += delta.y;
+        
+        if (this.x >= 10) this.x = 0;
+        if (this.x < 0) this.x = 9;
+        if (this.y >= 20) this.y = 0;
+        if (this.y < 0) this.y = 19;
     }
 
     getPosition() {
-        return { ...this.position, color: this.color };
+        return { x: this.x, y: this.y, color: this.color };
     }
 }

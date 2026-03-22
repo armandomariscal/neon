@@ -1,13 +1,17 @@
 import { Brick } from '../Domain/Brick.js';
+import { saveMove } from '../Infrastructure/Database/MongoClient.js';
 
 const playerOne = new Brick();
 
 export const GameState = {
-    refresh() {
+    async refresh() {
         const directions = ['up', 'down', 'left', 'right'];
         const randomDir = directions[Math.floor(Math.random() * directions.length)];
-        playerOne.move(randomDir);
         
-        return playerOne.getPosition();
+        playerOne.move(randomDir);
+        const currentPosition = playerOne.getPosition();
+
+        saveMove(currentPosition).catch(err => console.error("DB Error:", err));
+        return currentPosition;
     }
 };

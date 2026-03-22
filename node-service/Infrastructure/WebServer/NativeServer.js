@@ -2,30 +2,40 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { GameState } from '../../Application/GameState.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const UI_PATH = path.join(__dirname, '..', 'UI');
 
-export const startServer = (port) => {
-    const server = http.createServer((req, res) => {
+export const startServer = (port, gameState) => {
+    const server = http.createServer(async (req, res) => {
         if (req.url === '/api/state') {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            return res.end(JSON.stringify(GameState.refresh()));
+            try {
+                const state = await gameState.refresh(); 
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                return res.end(JSON.stringify(state));
+            } catch (error) {
+                console.error("❌ Error en el Core:", error.message);
+                res.writeHead(500);
+                return res.end(JSON.stringify({ error: "Error interno del servidor" }));
+            }
         }
 
-        let filePath = req.url === '/' ? path.join(UI_PATH, 'index.html') : path.join(UI_PATH, req.url);
-        const extname = path.extname(filePath);
+        const relativePath = req.url === '/' ? 'index.html' : req.url;
+        const filePath = path.join(UI_PATH, relativePath);
+        
         const mimeTypes = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript' };
+        const contentType = mimeTypes[path.extname(filePath)] || 'text/plain';
 
-        fs.readFile(filePath, (error, content) => {
-            if (error) {
-                res.writeHead(404);
-                res.end('Error 404: Archivo no encontrado.');
-            } else {
-                res.writeHead(200, { 'Content-Type': mimeTypes[extname] || 'text/plain' });
-                res.end(content, 'utf-8');
-            }
+        const stream = fs.createReadStream(filePath);
+
+        stream.on('open', () => {
+            res.writeHead(200, { 'Content-Type': contentType });
+            stream.pipe(res);
+        });
+
+        stream.on('error', () => {
+            res.writeHead(404);
+            res.end('404: Not Found');
         });
     });
 
