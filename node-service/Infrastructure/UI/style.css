@@ -9,6 +9,12 @@
     --text: #00ff41;
 }
 
+[data-theme="thunder"] {
+    --glow: #00d4ff;
+    --text: #fff;
+    --bg: #00121a;
+}
+
 body {
     background-color: var(--bg);
     color: var(--text);

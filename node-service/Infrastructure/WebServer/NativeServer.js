@@ -20,6 +20,12 @@ export const startServer = (port, gameState) => {
             }
         }
 
+        if (req.url === '/api/themes') {
+            const themes = await gameState.getAllThemes();
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify(themes));
+        }
+
         const relativePath = req.url === '/' ? 'index.html' : req.url;
         const filePath = path.join(UI_PATH, relativePath);
         

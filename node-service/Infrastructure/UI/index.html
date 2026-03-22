@@ -10,10 +10,7 @@
         <h1>NEON v1.0</h1>
         <canvas id="game-canvas" width="200" height="400"></canvas>
         <div class="controls">
-            <select id="theme-selector">
-                <option value="neon">Pink Neon (Electropunk)</option>
-                <option value="matrix">Matrix Green (Hacker)</option>
-            </select>
+            <select id="theme-selector"></select>
         </div>
     </div>
 
@@ -40,6 +37,22 @@
             }
         }
         setInterval(updatePixel, 200);
+
+        async function loadThemes() {
+            const selector = document.getElementById('theme-selector');
+            try {
+                const response = await fetch('/api/themes');
+                const themes = await response.json();
+                
+                selector.innerHTML = themes.map(t => 
+                    `<option value="${t.id}">${t.name}</option>`
+                ).join('');
+                
+            } catch (err) {
+                console.error("Error cargando temas:", err);
+            }
+        }
+        loadThemes();
     </script>
 </body>
 </html>
