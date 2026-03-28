@@ -15,6 +15,12 @@
     --bg: #00121a;
 }
 
+[data-theme="lava"] {
+    --glow: #e52b2b;
+    --text: #00121a;
+    --bg: #7c4f2a;
+}
+
 body {
     background-color: var(--bg);
     color: var(--text);
