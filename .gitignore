@@ -177,3 +177,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Game
+node-service/Infrastructure/Database/themes.json
