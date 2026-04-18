@@ -1,5 +1,6 @@
 import { Brick } from '../Domain/Brick.js';
-import { saveMove, getThemes } from '../Infrastructure/Database/MongoClient.js';
+import { getThemes } from '../Infrastructure/Database/ThemeRepository.js';
+import { saveMove } from '../Infrastructure/Database/MoveRepository.js';
 
 const playerOne = new Brick();
 
@@ -11,7 +12,9 @@ export const GameState = {
         playerOne.move(randomDir);
         const currentPosition = playerOne.getPosition();
 
-        saveMove(currentPosition).catch(err => console.error("DB Error:", err));
+        saveMove(currentPosition).catch(err => 
+            console.error("Error persistiendo movimiento:", err.message)
+        );
         return currentPosition;
     },
     async getAllThemes() {
