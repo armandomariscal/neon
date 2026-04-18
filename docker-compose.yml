@@ -1,0 +1,19 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: neon-db
+    ports:
+      - "${PORT_DB:-27017}:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+    volumes:
+      - neon_data:/data/db
+    networks:
+      - neon-network
+
+networks:
+  neon-network:
+    driver: bridge
+
+volumes:
+  neon_data:
