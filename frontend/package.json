@@ -1,0 +1,20 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "serve . -l 8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "webix": "^11.4.0",
+    "webix-jet": "^3.0.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.6",
+    "vite": "^8.0.11"
+  }
+}
