@@ -1,49 +1,54 @@
-# NEON - High-Performance Game Core & Infrastructure
+# NEON - High-Performance Game Ecosystem
 
 ## Overview
-NEON is a modular game engine core built with Node.js and TypeScript, utilizing a Clean Architecture approach to handle real-time game state, persistent themes, and player telemetry. The system is designed for high observability, scalability, and seamless environment orchestration using Docker.
+**NEON** is a modular game ecosystem designed with a decoupled architecture. It combines a real-time game core, a professional administrative interface, and a robust fiscal/logic backend. Built using **Clean Architecture** and **DDD**, it ensures high observability, scalability, and seamless environment orchestration.
+
+## Stack
+
+![Node.js](https://img.shields.io/badge/Node.js-22+-339933?logo=nodedotjs&logoColor=white)
+![Django REST Framework](https://img.shields.io/badge/DRF-Backend_API-092E20?logo=django&logoColor=white)
+![Webix Jet](https://img.shields.io/badge/Webix_Jet-Frontend_UI-2196F3?logo=javascript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?logo=typescript&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
+![Clean Architecture](https://img.shields.io/badge/Architecture-Clean-8A2BE2)
+
+## System Architecture
+
+The project is divided into three main decoupled pillars:
+
+*   **Game Core (The "ROM"):** A pure **Node.js** engine handling real-time game state, brick logic, and physics without framework overhead.
+*   **User Interface (The "Console"):** A sophisticated SPA built with **Webix Jet** for managing profiles, themes, scores, and navigation.
+*   **Backend Services (The "Cloud"):** A **Django REST Framework (DRF)** API providing persistent data, authentication, and global game configurations.
 
 ## Key Architectural Principles
 
 ### Clean Architecture & DDD
-The project follows Domain-Driven Design (DDD) principles to ensure business logic remains isolated from external concerns:
-- **Domain Layer:** Pure logic, interfaces, and entities (e.g., `ITheme`, `Brick.ts`) agnostic of any framework.
+Business logic is isolated from external concerns:
+- **Domain Layer:** Pure logic and entities (e.g., `ITheme`, `Brick.ts`) agnostic of any framework.
 - **Application Layer:** Orchestrates use cases and game state transitions.
-- **Infrastructure Layer:** Handles external dependencies such as MongoDB, Web Servers, and Logging utilities.
+- **Infrastructure Layer:** Handles external dependencies like MongoDB, PostgreSQL, and Web Servers.
 
-### Repository Pattern & Type Safety
-Data persistence is abstracted through repositories using **TypeScript Generics**. This decoupling ensures that the Game Core interacts with high-level interfaces rather than specific database drivers, providing compile-time validation for all database operations.
+### Technical Strategy
+- **NodeNext & ESM:** Strictly following modern ECMAScript Modules for scalable module handling.
+- **JIT & AOT Readiness:** Utilizing `ts-node/esm` for rapid development and pre-compiled `dist/` builds for production performance.
+- **Repository Pattern:** Data persistence abstracted through TypeScript Generics for compile-time validation.
 
-## TypeScript & Runtime Strategy
-
-### NodeNext Module Resolution
-The project is configured with **NodeNext** resolution, strictly following the latest ECMAScript Modules (ESM) standards. This ensures modern, scalable module handling and compatibility with the latest Node.js features.
-
-### Just-In-Time (JIT) Execution
-For development, the system utilizes a **JIT compilation** strategy via `ts-node/esm`. This allows for a rapid development cycle by compiling TypeScript in memory on-the-fly, eliminating the need for a manual build step during iteration.
-
-### Ahead-Of-Time (AOT) Readiness
-The architecture is designed for **AOT compilation**. While JIT is used for development, the project is structured to be compiled into a optimized `dist/` directory for production environments, ensuring maximum performance and minimal startup latency.
-
-## Infrastructure & Environment
+## Infrastructure
 
 ### Container Orchestration
-The project leverages **Docker Compose** to provide a consistent development environment. This ensures that MongoDB instances and network configurations are standardized across all deployments.
+Standardized development environment using **Docker Compose**, ensuring consistency across database instances (MongoDB/PostgreSQL) and network configurations.
 
 ## Developer Experience (DX)
 
-### Unified Workflow
-A streamlined automation pipeline is integrated into the system to handle the full development lifecycle:
-- **Automatic Port Management:** Prevents `EADDRINUSE` errors by cleaning up stale processes.
-- **Dynamic Seeding:** Ensures the database is always hydrated with the latest themes and metadata using type-safe seeding scripts.
-- **Parallel Service Execution:** Synchronizes Node.js and Python services simultaneously.
+- **Unified Workflow:** Automation for port management and process cleanup.
+- **Dynamic Seeding:** Type-safe scripts to ensure the database is always hydrated with the latest metadata.
+- **Advanced Observability:** Custom ANSI-coded logging for high-visibility terminal feedback in Unix/Linux environments.
 
-### Advanced Observability
-Custom ANSI-coded logging provides high-visibility terminal feedback. By avoiding non-standard characters and utilizing standardized status tags (`INFO`, `SUCCESS`, `DATABASE`, `ERROR`), the system ensures clear monitoring across professional Unix/Linux environments.
+## Development
 
-## Technical Specifications
-- **Runtime:** Node.js v22+ (ES Modules)
-- **Language:** TypeScript 5+ (Strict Mode)
-- **Database:** MongoDB (Managed via Docker)
-- **Execution:** `ts-node` for seamless development iteration.
-- **Standardization:** Native environment file handling (`--env-file`) without external dependencies.
+Run the full local environment:
+
+```bash
+# To start the infrastructure and services
+docker compose up --build
+```
